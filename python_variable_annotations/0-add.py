@@ -8,7 +8,7 @@ def add(a: float, b: float) -> float:
     """
     adding two float numbers.
 
-    Args: 
+    Args:
     a (float): first number to be added.
     b (float): second number to be added.
 
