@@ -1,4 +1,4 @@
-#!usr/bin/env python3
+#!/usr/bin/env python3
 
 """take float multiplier as arg and returns a function that multiplies a float
 """
