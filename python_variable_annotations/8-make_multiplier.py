@@ -12,8 +12,10 @@ def make_multiplier(multiplier: float) -> Callable[[float], float]:
 
     """higher-order function to get the result of multiple args or returns
 
+
+    function name: make_multiplier (takes a float as arg & returns a function)
+
     Args:
-    make_multiplier: function name
     multiplier: a float
 
     Returns: a function that takes a float and returns a float
