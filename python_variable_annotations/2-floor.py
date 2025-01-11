@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-"""a type annotated function floor that takes a float arg and returns floor.
+""" a type annotated function floor that takes a float arg and returns floor.
 """
 
 
