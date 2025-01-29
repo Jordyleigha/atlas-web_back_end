@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """function called filter_datum that returns the log message obfuscated"""
-import re
 import logging
+import re
 from typing import List
 
 
@@ -9,8 +9,8 @@ def filter_datum(fields: List[str],
                  redaction: str, message: str, separator: str) -> str:
     """Obfuscate specified fields in a log message."""
     pattern = r'({}){}=([^{}]*)'.format
-    ('|'.join(map(re.escape, fields)), re.escape
-     (separator), re.escape(separator))
+    ('|'.join(map(re.escape, fields)),
+     re.escape(separator), re.escape(separator))
     return re.sub(pattern, lambda m: f"{m.group(1)}={redaction}", message)
 
 
@@ -22,6 +22,7 @@ class RedactingFormatter(logging.Formatter):
     SEPARATOR = ";"
 
     def __init__(self, fields: List[str]):
+        """Initialize the formatter with fields to redact."""
         super(RedactingFormatter, self).__init__(self.FORMAT)
         self.fields = fields
 
