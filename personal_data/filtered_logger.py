@@ -24,5 +24,16 @@ def filter_datum(fields: List[str], redaction: str,
     pattern = r'({}){}=([^{}]*)'.format
     ('|'.join(map(re.escape, fields)),
      re.escape(separator), re.escape(separator))
+    return re.sub(pattern, lambda m:
+                  f"{m.group(0).split('=')[0]}={redaction}", message)
 
-    return re.sub(pattern, lambda m: f"{m.group(1)}={redaction}", message)
+
+if __name__ == "__main__":
+    fields0 = ["password", "secret"]
+    redaction = "REDACTED"
+    message0 = "username=john; password=12345; secret=abcde;"
+    separator = "; "
+    s0 = "username=john; password=REDACTED; secret=REDACTED;"
+
+    print("filter_datum worked as expected: {}".format
+          (filter_datum(fields0, redaction, message0, separator) == s0))
