@@ -1,4 +1,7 @@
 #!/usr/bin/env python3
+"""a simple function that takes two ints args and returns the tuple
+of size two containg a start and end index"""
+
 
 def index_range(page, page_size):
     """return a tuple of start and end index for pagination
