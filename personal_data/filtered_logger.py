@@ -1,13 +1,14 @@
 #!/usr/bin/env python3
 """function called filter_datum that returns the log message obfuscated"""
 import re
+from typing import List
 
 
-def filter_datum(fields, redaction, message, separator):
+def filter_datum(fields: List[str], redaction: str, message: str, separator: str) -> str:
     """Obfuscate specified fields in a log message.
 
     Args:
-        fields (list of str): A list of field names (strings) that should be
+        fields (List[str]): A list of field names (strings) that should be
             obfuscated in the log message.
         redaction (str): The string that will replace the specified fields
             in the log message.
