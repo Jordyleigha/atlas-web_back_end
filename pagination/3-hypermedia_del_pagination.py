@@ -59,6 +59,7 @@ class Server:
         index = index if index is not None else 0
         next_index = min(index + page_size, total_items)
         data = list(self.__indexed_dataset.values())[index:next_index]
+        print("it is delete-resilient!")
         return {
             "index": index,
             "next_index": next_index,
