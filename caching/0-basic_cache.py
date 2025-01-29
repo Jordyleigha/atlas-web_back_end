@@ -1,25 +1,32 @@
 #!/bin/usr/env python3
-import base_caching.py
-
-"""create a class that inherits from BaseCaching and is a caching system
-"""
+""" class BasicCache inherits from BaseCaching and it a caching system"""
+from base_caching import BaseCaching
 
 
-class BasicCache:
-    """BasicCache defines:
-    - constants of caching system
-    - where the data is stored (in BaseCaching dictionary)
-    """
-    MAX_ITEMS = 4
+class BasicCache(BaseCaching):
+    """ simple caching system that doesnt have a size limit
+    attrs:
+    cache_data(dict): the underlying in parent class dict storing
+    cached items"""
+    def __init__(self):
+        super().__init__()
 
-    def __init__(sefl):
-        """Initiliaze
+    def put(self, key, item):
+        """ adds an item to the cache
+        args:
+        key (_type_): key to associate with item
+        item (_type_): value to store into the cache
         """
-        self.cache_data = {}
+        if key is not None and item is not None:
+            self.cache_data[key] = item
 
-        def print_cache(self):
-            """print the cache
-            """
-            print("Current cache:")
-            for key in sorted(self.cache_data.keys()):
-                print("{}: {}" .format(key, self.cache_data.get(key)))
+    def get(self, key):
+        """ gets the item from the cache
+
+        args:
+        key (_type_): key of the item to get
+
+        returns:
+        any: value associated with the key or None if not found
+        """
+        return self.cache_data.get(key)
