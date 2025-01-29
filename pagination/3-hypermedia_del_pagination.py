@@ -42,13 +42,13 @@ class Server:
     def get_hyper_index(self, index: int = None, page_size: int = 10) -> Dict:
         """Retrieve a hypermedia representation of a specific index of data.
 
-    Args:
-        index (int, optional): The starting index to retrieve data from.
+        Args:
+            index (int, optional): The starting index to retrieve data from.
                                Defaults to None, which will start from index 0.
         page_size (int): The number of items to retrieve. Defaults to 10.
 
-    Returns:
-        Dict: A dictionary containing pagination information, including:
+        Returns:
+            Dict: A dictionary containing pagination information, including:
             - "index": The starting index for the current page.
             - "next_index": The index for the next page if it exists.
             - "page_size": The number of items per page.
