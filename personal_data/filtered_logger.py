@@ -2,7 +2,7 @@
 """function called filter_datum that returns the log message obfuscated"""
 import logging
 import re
-from typing import List
+from typing import List, Tuple
 
 
 def filter_datum(fields: List[str],
@@ -31,3 +31,20 @@ class RedactingFormatter(logging.Formatter):
         record.msg = filter_datum
         (self.fields, self.REDACTION, record.msg, self.SEPARATOR)
         return super().format(record)
+
+
+PII_FIELDS: Tuple
+[str, str, str, str, str] = ("email", "ssn", "password", "name", "address")
+
+
+def get_logger() -> logging.Logger:
+    """Create and return a logger configured for user data."""
+    logger = logging.getLogger("user_data")
+    logger.setLevel(logging.INFO)
+    logger.propagate = False
+    handler = logging.StreamHandler()
+    formatter = RedactingFormatter(fields=PII_FIELDS)
+    handler.setFormatter(formatter)
+    logger.addHandler(handler)
+
+    return logger
