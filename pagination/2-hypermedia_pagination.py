@@ -4,7 +4,7 @@ of size two containg a start and end index"""
 
 import csv
 import math
-from typing import List, Tuple
+from typing import List, Tuple, Dict
 
 
 def index_range(page, page_size):
