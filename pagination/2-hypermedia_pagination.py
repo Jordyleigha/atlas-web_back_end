@@ -60,7 +60,6 @@ class Server:
             return []
         return dataset[start_index:end_index]
 
-
     def get_hyper(self, page: int = 1, page_size: int = 10) -> Dict:
         """Retrieve a hypermedia representation of a specific page of data.
 
