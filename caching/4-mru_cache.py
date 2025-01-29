@@ -23,7 +23,7 @@ class MRUCache(BaseCaching):
             if len(self.cache_data) > BaseCaching.MAX_ITEMS:
                 most_key = self.order.pop(-2)
                 del self.cache_data[most_key]
-                print(f"DISCARD {most_key}")
+                print(f"DISCARD: {most_key}")
 
     def get(self, key):
         """gets item from cache from given key
