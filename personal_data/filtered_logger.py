@@ -5,12 +5,13 @@ import re
 from typing import List, Tuple
 
 
-def filter_datum(fields: List[str],
-                 redaction: str, message: str, separator: str) -> str:
+def filter_datum(fields:
+                 List[str], redaction: str, message: str,
+                 separator: str) -> str:
     """Obfuscate specified fields in a log message."""
     pattern = r'({}){}=([^{}]*)'.format
-    ('|'.join(map(re.escape, fields)),
-     re.escape(separator), re.escape(separator))
+    ('|'.join(map(re.escape, fields)), re.escape(separator),
+     re.escape(separator))
     return re.sub(pattern, lambda m: f"{m.group(1)}={redaction}", message)
 
 
@@ -42,9 +43,14 @@ def get_logger() -> logging.Logger:
     logger = logging.getLogger("user_data")
     logger.setLevel(logging.INFO)
     logger.propagate = False
+
+    # Create a StreamHandler
     handler = logging.StreamHandler()
+
     formatter = RedactingFormatter(fields=PII_FIELDS)
+
     handler.setFormatter(formatter)
+
     logger.addHandler(handler)
 
     return logger
