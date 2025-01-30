@@ -1,39 +1,38 @@
 #!/usr/bin/env python3
-"""module for API authentication management"""
-
-from flask import flask, request
+"""Authentication class responsible for handling authentication logic"""
+from flask import request
 from typing import List, TypeVar
-
-User = TypeVar('User ')
 
 
 class Auth:
-    """class to manage API authentication"""
+    """class that has methods to check authentication requirements,
+    authorization headers, and identitfy the current user
+    """
+
+    def __init__(self):
+        """Initialize the Auth object"""
+        pass
 
     def require_auth(self, path: str, excluded_paths: List[str]) -> bool:
-        """method to check if auth is required for a given path
-        Args:
-        path(str): the path to check
-        excluded_paths(List[str]): a lis of paths that do not require auth
-
-        returns:
-        bool: false (auth logic to be implemented later)"""
-        return False
+        """Check if authentication is required for path"""
+        if path is None:
+            return True
+        if excluded_paths is None or excluded_paths == []:
+            return True
+        if not path.endswith("/"):
+            path += "/"
+        if path in excluded_paths:
+            return False
+        return True
 
     def authorization_header(self, request=None) -> str:
-        """method to retrieve the authorization header from the request
+        """Extract the authorization header from request"""
+        if request is None:
+            return None
+        if "Authorization" not in request.headers:
+            return None
+        return request.headers["Authorization"]
 
-        args:
-        request: the flask request object
-
-        returns:
-        str: None (logic to be implemented later)"""
-        return None
-
-    def current_user(self, request=None) -> User:
-        """method to retrieve the current user from the request
-        args:
-        request: the flask request object
-        returns:
-        User: None"""
+    def current_user(self, request=None) -> TypeVar("User"):
+        """Get the current authenticated user"""
         return None
