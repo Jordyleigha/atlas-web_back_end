@@ -44,7 +44,7 @@ def forbidden(error) -> str:
 
 @app.before_request
 def before_request():
-    """Filters each request before process handler"""
+    """Filtering each request before processing handler"""
     if auth is None:
         return
     if not auth.require_auth(request.path, excluded_paths):
