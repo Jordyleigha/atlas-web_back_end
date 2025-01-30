@@ -14,17 +14,17 @@ class Auth:
         Args:
         path(str): the path to check
         excluded_paths(List[str]): a lis of paths that do not require auth
-        
+
         returns:
         bool: false (auth logic to be implemented later)"""
         return False
-    
+
     def authorization_header(self, request=None) -> str:
         """method to retrieve the authorization header from the request
-        
+
         args:
         request: the flask request object
-        
+
         returns:
         str: None (logic to be implemented later)"""
         return None
