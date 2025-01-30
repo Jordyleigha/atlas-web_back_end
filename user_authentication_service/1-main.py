@@ -1,4 +1,8 @@
+import logging
 from db import DB
+
+# Suppress SQLAlchemy logging
+logging.getLogger('sqlalchemy.engine').setLevel(logging.WARNING)
 
 if __name__ == "__main__":
     db = DB()
