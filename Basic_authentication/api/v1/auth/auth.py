@@ -28,12 +28,11 @@ class Auth:
         returns:
         str: None (logic to be implemented later)"""
         return None
+
     def current_user(self, request=None) -> User:
         """method to retrieve the current user from the request
-        
         args:
         request: the flask request object
-        
         returns:
         User: None"""
         return None
