@@ -21,21 +21,21 @@ class DB:
 
     @property
     def _session(self) -> Session:
-        """Memoized session object"""
+        """session object"""
         if self.__session is None:
             DBSession = sessionmaker(bind=self._engine)
             self.__session = DBSession()
         return self.__session
 
     def add_user(self, email: str, hashed_password: str) -> User:
-        """add new user to db"""
+        """add new user"""
         new_user = User(email=email, hashed_password=hashed_password)
         self._session.add(new_user)
         self._session.commit()
         return self._session.query(User).filter_by(email=email).first()
 
     def find_user_by(self, **kwargs) -> User:
-        """find a user by various criteria"""
+        """find a user by various info"""
         try:
             user = self._session.query(User).filter_by(**kwargs).first()
             if user is None:
