@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """module for API authentication management"""
-from Flask import request
+from Flask import flask, request
 from typing import List, TypeVar
 
 User = TypeVar('User ')
