@@ -7,29 +7,34 @@ from unittest.mock import patch, Mock
 
 
 class TestMemoize(unittest.TestCase):
-    """test case for memoize decorator
-    class contains unit tests to verify the memoize decor
-    correctly caches the results of a method"""
+    """
+    Test case for the memoize decorator.
+
+    This class contains unit tests to verify that the memoize decorator
+    correctly caches the results of a method.
+    """
 
     def test_memoize(self):
+        """
+        Test that the memoize decorator caches the result of a method.
+        """
         class TestClass:
             def a_method(self):
                 return 42
 
             @memoize
             def a_property(self):
-                return self.a_method
+                return self.a_method()
 
         test_instance = TestClass()
 
-    with patch.object(test_instance, 'a_method', return_value=42) as mock_method:
-        result_first_call = test_instance.a_property()
-        result_second_call = test_instance.a_property()
+        with patch.object(test_instance, 'a_method', return_value=42) as mock_method:
+            result_first_call = test_instance.a_property()
+            result_second_call = test_instance.a_property()
 
-        self.assertEqual(result_first_call, 42)
-        self.assertEqual(result_second_call, 42)
-
-        mock_method.assert_called_once()
+            self.assertEqual(result_first_call, 42)
+            self.assertEqual(result_second_call, 42)
+            mock_method.assert_called_once()
 
 
 class TestGetJson(unittest.TestCase):
