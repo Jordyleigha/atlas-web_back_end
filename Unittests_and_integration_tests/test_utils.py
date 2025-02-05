@@ -6,31 +6,6 @@ from utils import access_nested_map, get_json, memoize
 from unittest.mock import patch, Mock
 
 
-class TestMemoize(unittest.TestCase):
-    """ test the memoize decorator """
-    def test_memoize(self):
-        """ test that memoize decorator stores result of function """
-        class TestClass:
-            """ class to test memoize decorator """
-            def a_method(self):
-                """ method to test memoize decorator """
-                return 42
-
-            @memoize
-            def a_property(self):
-                """ method to test memoize decorator """
-                return self.a_method()
-        with patch.object(TestClass,
-                          'a_method',
-                          return_value=42) as mock_method:
-            instance = TestClass()
-            result_1 = instance.a_property
-            result_2 = instance.a_property
-            self.assertEqual(result_1, 42)
-            self.assertEqual(result_2, 42)
-            mock_method.assert_called_once()
-
-
 class TestGetJson(unittest.TestCase):
     """test case for the get_json function
     contains unit tests to verify that the get_json function
@@ -56,6 +31,31 @@ class TestGetJson(unittest.TestCase):
 
         mock_get.assert_called_once_with(test_url)
         self.assertEqual(result, test_payload)
+
+
+class TestMemoize(unittest.TestCase):
+    """ test the memoize decorator """
+    def test_memoize(self):
+        """ test that memoize decorator stores result of function """
+        class TestClass:
+            """ class to test memoize decorator """
+            def a_method(self):
+                """ method to test memoize decorator """
+                return 42
+
+            @memoize
+            def a_property(self):
+                """ method to test memoize decorator """
+                return self.a_method()
+        with patch.object(TestClass,
+                          'a_method',
+                          return_value=42) as mock_method:
+            instance = TestClass()
+            result_1 = instance.a_property
+            result_2 = instance.a_property
+            self.assertEqual(result_1, 42)
+            self.assertEqual(result_2, 42)
+            mock_method.assert_called_once()
 
 
 class TestAccessNestedMap(unittest.TestCase):
