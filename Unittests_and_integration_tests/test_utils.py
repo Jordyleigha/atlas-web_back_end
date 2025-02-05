@@ -27,7 +27,7 @@ class TestAccessNestedMap(unittest.TestCase):
         ({}, ("a",)),
         ({"a": 1}, ("a", "b")),
     ])
-    def test_acess_nested_map_exception(self, nested_map, path):
+    def test_access_nested_map_exception(self, nested_map, path):
         """test that accessing a non-existent key raises a KeyError
 
         param nested_map: the nested dict to test
