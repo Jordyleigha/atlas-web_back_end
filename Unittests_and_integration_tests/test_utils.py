@@ -12,16 +12,14 @@ class TestMemoize(unittest.TestCase):
     correctly caches the results of a method"""
 
     def test_memoize(self):
+        class TestClass:
+            def a_method(self):
+                return 42
 
-
-class TestClass:
-    def a_method(self):
-        return 42
-    
     @memoize
     def a_property(self):
         return self.a_method
-    
+
     test_instance = TestClass()
 
     with patch.object(test_instance, 'a_method', return_value=42) as mock_method:
