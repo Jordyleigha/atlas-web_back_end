@@ -7,34 +7,27 @@ from unittest.mock import patch, Mock
 
 
 class TestMemoize(unittest.TestCase):
-    """
-    Test case for the memoize decorator.
-
-    This class contains unit tests to verify that the memoize decorator
-    correctly caches the results of a method.
-    """
-
+    """ test the memoize decorator """
     def test_memoize(self):
-        """
-        Test that the memoize decorator caches the result of a method.
-        """
+        """ test that memoize decorator stores result of function """
         class TestClass:
+            """ class to test memoize decorator """
             def a_method(self):
+                """ method to test memoize decorator """
                 return 42
 
             @memoize
             def a_property(self):
+                """ method to test memoize decorator """
                 return self.a_method()
-
-        test_instance = TestClass()
-
-        with patch.object(test_instance,
-                          'a_method', return_value=42) as mock_method:
-            result_first_call = test_instance.a_property()
-            result_second_call = test_instance.a_property()
-
-            self.assertEqual(result_first_call, 42)
-            self.assertEqual(result_second_call, 42)
+        with patch.object(TestClass,
+                          'a_method',
+                          return_value=42) as mock_method:
+            instance = TestClass()
+            result_1 = instance.a_property
+            result_2 = instance.a_property
+            self.assertEqual(result_1, 42)
+            self.assertEqual(result_2, 42)
             mock_method.assert_called_once()
 
 
