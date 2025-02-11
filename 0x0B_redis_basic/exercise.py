@@ -88,5 +88,4 @@ def replay(method: Callable) -> None:
     for input_data, output_data in zip(inputs, outputs):
         # decode the input & output data from bytes to str
         # use eval to convert the str of the input back into its org form
-        print(f"{method.__qualname__}(*{eval(input_data.decode('utf-8'))})
-               -> {output_data.decode('utf-8')}")
+        print(f"{method.__qualname__}(*{eval(input_data.decode('utf-8'))}) -> {output_data.decode('utf-8')}")
