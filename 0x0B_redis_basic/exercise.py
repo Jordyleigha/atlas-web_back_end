@@ -65,7 +65,30 @@ def count_calls(method: Callable) -> Callable:
 
 
 class Cache:
+    """
+    Cache class to interact with a Redis database.
+
+    This class provides methods to store and retrieve data, track
+    call history, and count the number of times methods are called.
+    It uses decorators to enhance the functionality of its methods.
+
+    Attributes:
+    _redis (redis.Redis): The Redis client instance used for
+                          interacting with the Redis database.
+
+    Methods:
+    store(data): Stores the given data in Redis and returns a unique key.
+    get(key, fn=None): Retrieves the value associated with the given key.
+    get_str(key): Retrieves the value as a string.
+    get_int(key): Retrieves the value as an integer.
+    """
     def __init__(self) -> None:
+        """
+        Initialize the Cache instance.
+
+        This method creates a Redis client and flushes the database
+        to ensure it starts with a clean state.
+        """
         # Initialize the Redis client and flush the database
         self._redis = redis.Redis()
         self._redis.flushdb()
@@ -73,6 +96,19 @@ class Cache:
     @call_history
     @count_calls  # decorate the store method with count_calls
     def store(self, data: Union[str, bytes, int, float]) -> str:
+        """
+        Store data in Redis and return a unique key.
+
+        This method generates a unique key using UUID, stores the
+        provided data in Redis, and returns the generated key.
+
+        Parameters:
+        data (Union[str, bytes, int, float]): The data to be stored
+                                               in Redis.
+
+        Returns:
+        str: The unique key associated with the stored data.
+        """
         # generate a random key using uuid
         key = str(uuid.uuid4())
         # store the data in Redis with the generated key
@@ -83,6 +119,23 @@ class Cache:
     def get(self, key: str, fn:
             Optional[callable] =
             None) -> Optional[Union[str, bytes, int, float]]:
+        """
+        Retrieve a value from Redis by its key.
+
+        This method fetches the value associated with the given key
+        from Redis. If a conversion function is provided, it applies
+        that function to the retrieved value before returning it.
+
+        Parameters:
+        key (str): The key associated with the value to be retrieved.
+        fn (Optional[Callable]): An optional function to convert the
+                                 retrieved value.
+
+        Returns:
+        Optional[Union[str, bytes, int, float]]: The value associated
+                                                  with the key, or None
+                                                  if the key does not exist.
+        """
         # retrieve the data from redis
         value = self._redis.get(key)
         # if the key does not exist, return None
@@ -95,10 +148,38 @@ class Cache:
         return value
 
     def get_str(self, key: str) -> Optional[str]:
+        """
+        Retrieve a value from Redis as a string.
+
+        This method calls the `get` method to retrieve the value
+        associated with the given key and converts it to a UTF-8
+        string before returning it.
+
+        Parameters:
+        key (str): The key associated with the value to be retrieved.
+
+        Returns:
+        Optional[str]: The value associated with the key as a string,
+                       or None if the key does not exist.
+        """
         # retrieve the value as a string
         return self.get(key, fn=lambda d: d.decode("utf-8"))
 
     def get_int(self, key: str) -> Optional[int]:
+        """
+        Retrieve a value from Redis as an integer.
+
+        This method calls the `get` method to retrieve the value
+        associated with the given key and converts it to an integer
+        before returning it.
+
+        Parameters:
+        key (str): The key associated with the value to be retrieved.
+
+        Returns:
+        Optional[int]: The value associated with the key as an integer,
+                       or None if the key does not exist.
+        """
         # retrieve the value as an integer
         return self.get(key, fn=int)
 
