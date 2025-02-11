@@ -24,7 +24,7 @@ class Cache:
         self._redis = redis.Redis()
         self._redis.flushdb()
 
-    @count_calls
+    @count_calls  # decorate the store method with count_calls
     def store(self, data: Union[str, bytes, int, float]) -> str:
         # generate a random key using uuid
         key = str(uuid.uuid4())
