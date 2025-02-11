@@ -6,6 +6,22 @@ from typing import Union, Callable, Optional
 from functools import wraps
 
 
+def call_history(method: Callable) -> Callable:
+    @wraps(method)
+    def wrapper(self, *args, **kwargs):
+        # create keys for inputs and outputs
+        input_key = f"{method.__qualname__}:inputs"
+        output_key = f"{method.__qualname__}:outputs"
+        # normalize input args and store in redis
+        self._redis.rpush(input_key, str(args))
+        # call the org method to get output
+        output = method(self, *args, **kwargs)
+        # store the output in redis
+        self._redis.rpush(output_key, str(output))
+        return output
+    return wrapper
+
+
 def count_calls(method: Callable) -> Callable:
     @wraps(method)
     def wrapper(self, *args, **kwargs):
@@ -24,6 +40,7 @@ class Cache:
         self._redis = redis.Redis()
         self._redis.flushdb()
 
+    @call_history
     @count_calls  # decorate the store method with count_calls
     def store(self, data: Union[str, bytes, int, float]) -> str:
         # generate a random key using uuid
@@ -33,7 +50,9 @@ class Cache:
         # return the generated key
         return key
 
-    def get(self, key: str, fn: Optional[callable] = None) -> Optional[Union[str, bytes, int, float]]:
+    def get(self, key: str, fn:
+            Optional[callable] =
+            None) -> Optional[Union[str, bytes, int, float]]:
         # retrieve the data from redis
         value = self._redis.get(key)
         # if the key does not exist, return None
