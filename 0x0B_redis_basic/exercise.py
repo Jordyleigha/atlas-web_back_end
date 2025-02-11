@@ -86,4 +86,7 @@ def replay(method: Callable) -> None:
     print(f"{method.__qualname__} was called {call_count} times:")
     # loop through inputs and outputs and print them
     for input_data, output_data in zip(inputs, outputs):
-        print(f"{method.__qualname__}(*{eval(input_data.decode('utf-8'))}) -> {output_data.decode('utf-8')}")
+        # decode the input & output data from bytes to str
+        # use eval to convert the str of the input back into its org form
+        print(f"{method.__qualname__}(*{eval(input_data.decode('utf-8'))})
+               -> {output_data.decode('utf-8')}")
