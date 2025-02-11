@@ -7,6 +7,21 @@ from functools import wraps
 
 
 def call_history(method: Callable) -> Callable:
+    """
+    Decorator to store the history of inputs and outputs for a function.
+
+    This decorator appends the input parameters to a Redis list
+    and stores the output of the function in another Redis list
+    each time the decorated function is called.
+
+    Parameters:
+    method (Callable): The function to be decorated. This function
+                       should accept any number of positional arguments.
+
+    Returns:
+    Callable: A wrapper function that adds input/output history
+              functionality to the original function.
+    """
     @wraps(method)
     def wrapper(self, *args, **kwargs):
         # create keys for inputs and outputs
