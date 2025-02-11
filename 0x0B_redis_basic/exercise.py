@@ -74,7 +74,18 @@ class Cache:
 
 
 def replay(method: Callable) -> None:
-    # get input and output keys
+    """get input and output keys
+      function retrives the inout parameters and output results
+      of the specified method from redis and prints them in a
+      formatted manner.
+
+      parameters:
+      method (Callable): the method whose call history is to
+      be displayed.
+
+      returns:
+      None: function does not return any value. It prints the call
+      history directly to the concole """
     input_key = f"{method.__qualname__}:inputs"
     output_key = f"{method.__qualname__}:outputs"
     # retrieve the inputs and outputs from redis
