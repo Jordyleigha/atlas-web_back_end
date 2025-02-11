@@ -38,6 +38,21 @@ def call_history(method: Callable) -> Callable:
 
 
 def count_calls(method: Callable) -> Callable:
+    """
+    Decorator to count the number of times a function is called.
+
+    This decorator increments a Redis key each time the decorated
+    function is called, allowing for tracking of how many times
+    the function has been invoked.
+
+    Parameters:
+    method (Callable): The function to be decorated. This function
+                       should accept any number of positional arguments.
+
+    Returns:
+    Callable: A wrapper function that increments the call count
+              in Redis and calls the original function.
+    """
     @wraps(method)
     def wrapper(self, *args, **kwargs):
         # use the qualified name of the method as a key
