@@ -2,7 +2,7 @@
 -- by the second number or returns 0 if the second number is equal to 0
 DELIMITER //
 
-CREATE FUNCTION SafeDiv(a INT, b INT) 
+CREATE FUNCTION SafeDiv(a int, b int)
 RETURNS INT
 BEGIN
     DECLARE result INT;
