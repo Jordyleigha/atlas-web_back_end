@@ -2,6 +2,15 @@
 """function that lists all documents in a collection"""
 
 
+from pymongo import MongoClient
+
+client = MongoClient()
+
+
 def list_all(mongo_collection):
-    """Return an empty list if no document in the collection"""
-    return list(mongo_collection.find())
+    """ pymongo command for getting all documents in collection
+    """
+    res = []
+    for doc in mongo_collection.find({}):
+        res.append(doc)
+    return res
