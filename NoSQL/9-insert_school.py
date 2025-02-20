@@ -2,7 +2,13 @@
 """function that inserts a new document in a collection based on kwargs"""
 
 
+from pymongo import MongoClient
+
+client = MongoClient()
+
+
 def insert_school(mongo_collection, **kwargs):
-    """Returns the new _id"""
-    result = mongo_collection.insert_one(kwargs)
-    return result.inserted_id
+    """ add new document
+    """
+    doc = mongo_collection.insert_one(kwargs)
+    return doc.inserted_id
