@@ -1,5 +1,5 @@
 -- script that lists all bands with glam rock, as their main style, ranked by longevity
-SELECT band_name, (IFNULL(split, YEAR(CURDATE())) - formed) AS lifespan
+SELECT band_name, TIMESTAMPDIFF(year, MAKEDATE(formed, 1), IF(split IS NULL, CURDATE(), MAKEDATE(split, 1))) AS lifespan
 FROM metal_bands
-WHERE FIND_IN_SET('Glam rock', style) > 0
+WHERE style LIKE '%Glam rock%'
 ORDER BY lifespan DESC;
