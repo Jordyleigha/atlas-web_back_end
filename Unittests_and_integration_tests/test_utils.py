@@ -93,3 +93,31 @@ class TestAccessNestedMap(unittest.TestCase):
 
     if __name__ == '__main__':
         unittest.main()
+
+
+
+""" GET JSON FUNCTION TESTS -
+makes HTTP GET request to a given URL and returns the response in JSON format
+def get_json(url: str) -> Dict:
+    response = requests.get(url)
+    return response.json()
+"""
+
+
+class TestGetJson(unittest.TestCase):
+    """ test the get_json function """
+    @parameterized.expand([
+            ("http://example.com", {"payload": True}),
+            ("http://holberton.io", {"payload": False}),
+        ])
+    def test_get_json(self, test_url, test_payload):
+        """ test get_json func with mock http resopnses"""
+        with patch('utils.requests.get') as mock_get:
+            mock_response = Mock()
+            mock_response.json.return_value = test_payload
+            mock_get.return_value = mock_response
+            result = get_json(test_url)
+            mock_get.assert_called_once_with(test_url)
+            self.assertEqual(result, test_payload)
+
+
